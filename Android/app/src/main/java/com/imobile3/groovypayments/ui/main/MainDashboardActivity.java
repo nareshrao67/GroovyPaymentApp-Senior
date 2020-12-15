@@ -106,7 +106,6 @@ public class MainDashboardActivity extends BaseActivity {
                         R.string.common_under_construction,
                         R.string.under_construction_alert_message,
                         R.string.common_acknowledged);
-                break;
         }
     }
 

@@ -19,6 +19,8 @@ package com.imobile3.groovypayments;
 import android.app.Application;
 
 import com.imobile3.groovypayments.data.DatabaseHelper;
+import com.imobile3.groovypayments.data.GroovyDatabase;
+import com.imobile3.groovypayments.data.TestDataRepository;
 import com.imobile3.groovypayments.logging.LogHelper;
 import com.imobile3.groovypayments.manager.ApiKeyManager;
 import com.imobile3.groovypayments.network.WebServiceConfig;

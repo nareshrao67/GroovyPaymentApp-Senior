@@ -82,6 +82,8 @@ dependencies {
     // Stripe Android SDK (Client)
     implementation 'com.stripe:stripe-android:14.0.0'
 
+    implementation 'com.github.PhilJay:MPAndroidChart:v2.2.4'
+
     // Unit Testing Dependencies
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.hamcrest:hamcrest-library:1.3'

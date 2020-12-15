@@ -30,6 +30,8 @@
         app:layout_constraintTop_toBottomOf="@id/main_nav_bar">
 
         <LinearLayout
+            app:layout_constraintTop_toBottomOf="@+id/main_nav_bar"
+            android:paddingTop="@dimen/activity_horizontal_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -60,8 +62,8 @@
                     android:layout_weight="0.75"
                     android:gravity="end"
                     android:text="@string/user_profile_username"
-                    android:visibility="gone"
-                    tools:visibility="visible" />
+                    android:visibility="visible"
+                    tools:visibility="gone" />
 
                 <TextView
                     android:id="@+id/label_username"
@@ -71,6 +73,7 @@
                     android:layout_marginStart="@dimen/margin_large"
                     android:layout_weight="1"
                     android:gravity="start"
+                    android:layout_marginEnd="@dimen/padding_small"
                     tools:text="johndoe" />
             </LinearLayout>
 
@@ -87,8 +90,8 @@
                     android:layout_weight="0.75"
                     android:gravity="end"
                     android:text="@string/user_profile_email"
-                    android:visibility="gone"
-                    tools:visibility="visible" />
+                    android:visibility="visible"
+                    tools:visibility="gone" />
 
                 <TextView
                     android:id="@+id/label_email"
@@ -114,8 +117,8 @@
                     android:layout_weight="0.75"
                     android:gravity="end"
                     android:text="@string/user_profile_hours_week"
-                    android:visibility="gone"
-                    tools:visibility="visible" />
+                    android:visibility="visible"
+                    tools:visibility="gone" />
 
                 <TextView
                     android:id="@+id/label_hours_week"
@@ -125,6 +128,7 @@
                     android:layout_marginStart="@dimen/margin_large"
                     android:layout_weight="1"
                     android:gravity="start"
+                    android:layout_marginEnd="@dimen/padding_small"
                     tools:text="34.75" />
             </LinearLayout>
         </LinearLayout>

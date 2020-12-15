@@ -1,6 +1,8 @@
 package com.imobile3.groovypayments.ui.chart;
 
 import com.imobile3.groovypayments.data.CartRepository;
+import com.imobile3.groovypayments.data.TestDataRepository;
+import com.imobile3.groovypayments.data.entities.CartEntity;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -17,10 +19,12 @@ public class PieChartViewModel extends ViewModel {
         mCartRepository = repository;
     }
 
-    LiveData<List<String>> getProductList() {
-        final MutableLiveData<List<String>> observable =
+    LiveData<List<CartEntity>> getProductList() {
+        final MutableLiveData<List<CartEntity>> observable =
                 new MutableLiveData<>(new ArrayList<>());
-
+        List<CartEntity> cartEntities = TestDataRepository.getInstance()
+                .getCarts(TestDataRepository.Environment.GroovyDemo);
+        observable.postValue(cartEntities);
         return observable;
     }
 }

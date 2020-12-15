@@ -18,6 +18,7 @@ package com.imobile3.groovypayments.rules;
 
 import android.text.TextUtils;
 
+import com.imobile3.groovypayments.data.entities.ProductEntity;
 import com.imobile3.groovypayments.data.enums.GroovyColor;
 import com.imobile3.groovypayments.data.enums.GroovyIcon;
 import com.imobile3.groovypayments.data.model.Product;
@@ -35,9 +36,9 @@ import java.util.Objects;
 public final class ProductRules {
 
     @NonNull
-    private Product mProduct;
+    private ProductEntity mProduct;
 
-    public ProductRules(@NonNull Product product) {
+    public ProductRules(@NonNull ProductEntity product) {
         mProduct = Objects.requireNonNull(product);
     }
 

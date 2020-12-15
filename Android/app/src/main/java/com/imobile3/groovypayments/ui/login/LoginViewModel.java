@@ -1,11 +1,13 @@
 package com.imobile3.groovypayments.ui.login;
 
+import android.util.Log;
 import android.util.Patterns;
 
 import com.imobile3.groovypayments.R;
 import com.imobile3.groovypayments.data.LoginRepository;
 import com.imobile3.groovypayments.data.Result;
 import com.imobile3.groovypayments.data.model.LoggedInUser;
+import com.imobile3.groovypayments.data.utils.EncryptDecrypt;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -29,10 +31,10 @@ public class LoginViewModel extends ViewModel {
         return loginResult;
     }
 
-    public void login(String username, String password) {
+    public void login(String username, String password) throws Exception {
         // Can be launched in a separate asynchronous job
-        Result<LoggedInUser> result = loginRepository.login(username, password);
-
+        Result<LoggedInUser> result = loginRepository.login(EncryptDecrypt.decodeAndDecrypt(username),
+                                                            EncryptDecrypt.decodeAndDecrypt(password));
         if (result instanceof Result.Success) {
             LoggedInUser data = ((Result.Success<LoggedInUser>)result).getData();
             loginResult.setValue(new LoginResult(new LoggedInUserView(data.getDisplayName())));

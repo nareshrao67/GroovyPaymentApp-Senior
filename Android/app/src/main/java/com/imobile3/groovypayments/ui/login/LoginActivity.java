@@ -2,9 +2,11 @@ package com.imobile3.groovypayments.ui.login;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -13,15 +15,18 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.imobile3.groovypayments.R;
+import com.imobile3.groovypayments.data.utils.EncryptDecrypt;
+import com.imobile3.groovypayments.logging.LogHelper;
 import com.imobile3.groovypayments.ui.BaseActivity;
 import com.imobile3.groovypayments.ui.main.MainDashboardActivity;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+
 
 public class LoginActivity extends BaseActivity {
 
@@ -47,6 +52,7 @@ public class LoginActivity extends BaseActivity {
                 loginButton.setEnabled(loginFormState.isDataValid());
                 if (loginFormState.getUsernameError() != null) {
                     usernameEditText.setError(getString(loginFormState.getUsernameError()));
+                    saveToShared("name","UserName",usernameEditText.getText().toString());
                 }
                 if (loginFormState.getPasswordError() != null) {
                     passwordEditText.setError(getString(loginFormState.getPasswordError()));
@@ -95,8 +101,12 @@ public class LoginActivity extends BaseActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    loginViewModel.login(usernameEditText.getText().toString(),
-                            passwordEditText.getText().toString());
+                    try {
+                        loginViewModel.login(usernameEditText.getText().toString(),
+                                passwordEditText.getText().toString());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
                 return false;
             }
@@ -106,8 +116,12 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
-                loginViewModel.login(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
+                try {
+                    loginViewModel.login(EncryptDecrypt.encryptAndEncode(usernameEditText.getText().toString()),
+                            EncryptDecrypt.encryptAndEncode(passwordEditText.getText().toString()));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -121,7 +135,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void updateUiWithUser(LoggedInUserView model) {
-        String welcome = getString(R.string.welcome) + model.getDisplayName();
+        String welcome = getString(R.string.welcome) ;
         // TODO: Initiate successful logged in experience
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
     }
@@ -136,5 +150,12 @@ public class LoginActivity extends BaseActivity {
         // Complete and destroy login activity once successful
         finish();
         startActivity(new Intent(LoginActivity.this, MainDashboardActivity.class));
+    }
+
+    private  void saveToShared( String key,String prefName, String data){
+        SharedPreferences pref = getApplicationContext().getSharedPreferences(prefName, 0); // 0 - for private mode
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString(key, data);
+        editor.commit();
     }
 }
